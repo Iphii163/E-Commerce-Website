@@ -4,15 +4,17 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
+import { useWatchlist } from "@/context/WatchlistContext";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const { cartCount } = useCart();
+  const { watchlistCount } = useWatchlist();
   const isActive = (path: string) => pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/90 backdrop-blur">
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-18 items-center justify-between">
 
@@ -61,6 +63,25 @@ export default function Navbar() {
               About
             </Link>
           </div>
+
+          <Link
+            href="/watchlist"
+            className={`hidden items-center gap-2 rounded-full border border-gray-300 px-5 py-2 text-sm font-medium text-gray-900 transition md:flex ${
+              isActive("/watchlist")
+                  ? "bg-black text-white"
+                  : "text-gray-600 hover:bg-gray-100 hover:text-black"
+              }`}
+          >
+            <span>
+              Watchlist
+            </span>
+
+            {watchlistCount > 0 && (
+              <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-black px-1.5 text-xs font-semibold text-white">
+                {watchlistCount}
+              </span>
+            )}
+          </Link>
 
           <Link
             href="/cart"
@@ -126,6 +147,19 @@ export default function Navbar() {
                 About
               </Link>
 
+              <Link
+                href="/watchlist"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-2 text-sm font-medium text-gray-700"
+              >
+                Watchlist
+
+                {watchlistCount > 0 && (
+                  <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-black px-1.5 text-xs text-white">
+                    {watchlistCount}
+                  </span>
+                )}
+              </Link>
 
               <Link
                 href="/cart"

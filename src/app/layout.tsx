@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { CartProvider } from "@/context/CartContext";
+import { WatchlistProvider } from "@/context/WatchlistContext";
 
 export const metadata: Metadata = {
   title: "Ifra'Store",
@@ -18,9 +19,11 @@ export default function RootLayout({
     <html lang="en" className="h-full">
       <body className="flex min-h-screen flex-col">
         <CartProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <WatchlistProvider>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </WatchlistProvider>
         </CartProvider>
       </body>
     </html>

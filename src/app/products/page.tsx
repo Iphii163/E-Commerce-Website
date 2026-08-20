@@ -36,10 +36,6 @@ export default async function ProductsPage({
 
   const skip = (page - 1) * PRODUCTS_PER_PAGE;
 
-  // --------------------------------
-  // Decide which product API to use
-  // --------------------------------
-
   let productsPromise;
 
   if (search) {
@@ -61,11 +57,6 @@ export default async function ProductsPage({
     );
   }
 
-  // --------------------------------
-  // Fetch products and categories
-  // separately
-  // --------------------------------
-
   const result = await productsPromise;
 
   let categories: string[] = [];
@@ -82,10 +73,6 @@ export default async function ProductsPage({
   }
 
   let { products, total } = result;
-
-  // --------------------------------
-  // Sorting
-  // --------------------------------
 
   if (sort === "price-low") {
     products = [...products].sort(
@@ -117,8 +104,6 @@ export default async function ProductsPage({
 
       <div className="mx-auto max-w-7xl">
 
-        {/* Header */}
-
         <div className="mb-10">
 
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gray-400">
@@ -129,7 +114,7 @@ export default async function ProductsPage({
 
             <div>
 
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+              <h1 className="text-4xl font-bold tracking-tight text-gold sm:text-5xl">
                 Shop Products
               </h1>
 
@@ -148,13 +133,9 @@ export default async function ProductsPage({
 
         </div>
 
-        {/* Filters */}
-
         <FilterBar
           categories={categories}
         />
-
-        {/* Products */}
 
         {products.length === 0 ? (
 

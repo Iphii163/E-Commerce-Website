@@ -33,7 +33,6 @@ export default function Pagination({
   return (
     <div className="mt-12 flex items-center justify-center gap-2">
 
-      {/* Previous */}
       <button
         onClick={() => goToPage(currentPage - 1)}
         disabled={currentPage === 1}
@@ -42,7 +41,6 @@ export default function Pagination({
         ←
       </button>
 
-      {/* Page Numbers */}
       {Array.from(
         { length: totalPages },
         (_, index) => index + 1
@@ -60,7 +58,6 @@ export default function Pagination({
         </button>
       ))}
 
-      {/* Next */}
       <button
         onClick={() => goToPage(currentPage + 1)}
         disabled={currentPage === totalPages}

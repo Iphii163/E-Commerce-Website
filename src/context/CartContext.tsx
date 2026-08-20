@@ -26,6 +26,7 @@ type CartContextType = {
   cartCount: number;
   subtotal: number;
 };
+
 const CartContext = createContext<CartContextType | undefined>(
   undefined
 );
@@ -113,13 +114,12 @@ export function CartProvider({
       )
     );
   }
+
   function clearCart() {
-  setCart([]);
-}
-  const cartCount = cart.reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
+    setCart([]);
+  }
+
+  const cartCount = cart.length;
 
   const subtotal = cart.reduce(
     (total, item) =>
@@ -128,18 +128,18 @@ export function CartProvider({
   );
 
   return (
-   <CartContext.Provider
-   value={{
-    cart,
-    addToCart,
-    increaseQuantity,
-    decreaseQuantity,
-    removeItem,
-    clearCart,
-    cartCount,
-    subtotal,
-  }}
->
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        increaseQuantity,
+        decreaseQuantity,
+        removeItem,
+        clearCart,
+        cartCount,
+        subtotal,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

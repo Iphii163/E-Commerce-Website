@@ -72,6 +72,20 @@ export default function CartPage() {
     setCart(updatedCart);
   }
 
+  function handleIncrease(productId: number) {
+    const item = cart.find(
+      (i) => i.productId === productId
+    );
+    if (item) updateQuantity(productId, item.quantity + 1);
+  }
+
+  function handleDecrease(productId: number) {
+    const item = cart.find(
+      (i) => i.productId === productId
+    );
+    if (item) updateQuantity(productId, item.quantity - 1);
+  }
+
   const total = cart.reduce(
     (sum, item) =>
       sum + item.price * item.quantity,
@@ -154,11 +168,10 @@ export default function CartPage() {
             {cart.map((item) => (
               <CartItem
                 key={item.productId}
-                item={item}
+                item={{ ...item, thumbnail: item.thumbnail ?? "" }}
                 onRemove={removeItem}
-                onQuantityChange={
-                  updateQuantity
-                }
+                onIncrease={handleIncrease}
+                onDecrease={handleDecrease}
               />
             ))}
 

@@ -25,7 +25,6 @@ type PlacedOrder = {
 
 const paymentOptions = [
   { value: "cod", label: "Cash on Delivery" },
-  { value: "easypaisa", label: "Easypaisa / JazzCash" },
   { value: "card", label: "Credit / Debit Card" },
 ];
 

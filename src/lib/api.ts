@@ -99,11 +99,7 @@ export async function getCategories() {
   }
 
   const data = await response.json();
-
-  // DummyJSON can return category objects
-  // depending on the endpoint/version.
-  // Convert them into simple strings.
-
+  
   return data.map((category: any) => {
     if (typeof category === "string") {
       return category;

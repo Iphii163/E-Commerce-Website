@@ -36,13 +36,49 @@ export default function CheckoutPage() {
   const [placedOrder, setPlacedOrder] = useState<PlacedOrder | null>(null);
   const [paymentMethod, setPaymentMethod] = useState("cod");
 
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const [stripeError, setStripeError] = useState<string | null>(null);
+
   const shipping = subtotal > 0 ? 5 : 0;
   const total = subtotal + shipping;
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
+    const email = formData.get("email") as string;
+
+    if (paymentMethod === "card") {
+      setStripeError(null);
+      setIsRedirecting(true);
+
+      try {
+        const response = await fetch("/api/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items: cart,
+            email,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.url) {
+          throw new Error(data.error || "Something went wrong.");
+        }
+
+        window.location.href = data.url;
+      } catch (error) {
+        console.error(error);
+        setStripeError(
+          "We couldn't start the payment. Please try again."
+        );
+        setIsRedirecting(false);
+      }
+
+      return;
+    }
 
     const randomDigits = Math.floor(100000 + Math.random() * 900000);
     const orderNumber = `ORD-${randomDigits}`;
@@ -51,7 +87,7 @@ export default function CheckoutPage() {
       orderNumber,
       items: cart,
       name: formData.get("name") as string,
-      email: formData.get("email") as string,
+      email,
       address: formData.get("address") as string,
       city: formData.get("city") as string,
       postal: formData.get("postal") as string,
@@ -366,10 +402,21 @@ export default function CheckoutPage() {
 
             <button
               type="submit"
-              className="mt-8 w-full rounded-xl bg-black px-6 py-4 text-sm font-semibold text-white transition hover:bg-gray-800"
+              disabled={isRedirecting}
+              className="mt-8 w-full rounded-xl bg-black px-6 py-4 text-sm font-semibold text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Place Order
+              {isRedirecting
+                ? "Redirecting to Stripe…"
+                : paymentMethod === "card"
+                ? "Pay with Card"
+                : "Place Order"}
             </button>
+
+            {stripeError && (
+              <p className="mt-3 text-center text-sm text-red-600">
+                {stripeError}
+              </p>
+            )}
 
           </form>
 

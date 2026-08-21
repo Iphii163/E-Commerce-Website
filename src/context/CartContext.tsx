@@ -25,6 +25,7 @@ type CartContextType = {
   clearCart: () => void;
   cartCount: number;
   subtotal: number;
+  loaded: boolean;
 };
 
 const CartContext = createContext<CartContextType | undefined>(
@@ -138,6 +139,7 @@ export function CartProvider({
         clearCart,
         cartCount,
         subtotal,
+        loaded,
       }}
     >
       {children}

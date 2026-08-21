@@ -96,7 +96,7 @@ export default function Home() {
             href="/products"
             className="mt-8 inline-block rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-black text-black transition hover:bg-gold/90"
           >
-            Explore Products
+            Explore All Products
           </Link>
 
         </div>

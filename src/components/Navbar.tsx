@@ -14,7 +14,7 @@ export default function Navbar() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/90 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/85 backdrop-blur">
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-18 items-center justify-between">
 
@@ -85,7 +85,11 @@ export default function Navbar() {
 
           <Link
             href="/cart"
-            className="hidden items-center gap-2 rounded-full border border-gray-300 px-5 py-2 text-sm font-medium text-gray-900 transition hover:bg-black hover:text-white md:flex"
+            className={`hidden items-center gap-2 rounded-full border border-gray-300 px-5 py-2 text-sm font-medium text-gray-900 transition md:flex ${
+              isActive("/cart")
+                  ? "bg-black text-white"
+                  : "text-gray-600 hover:bg-gray-100 hover:text-black"
+              }`}
           >
             <span>
               Cart

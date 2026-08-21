@@ -154,7 +154,11 @@ export default function Navbar() {
               <Link
                 href="/watchlist"
                 onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                className={`rounded-lg px-4 py-2 text-sm font-medium ${
+                  isActive("/watchlist")
+                  ? "bg-black text-white"
+                  : "text-gray-600 hover:bg-gray-100 hover:text-black"
+              }`}
               >
                 Watchlist
 
@@ -168,7 +172,11 @@ export default function Navbar() {
               <Link
                 href="/cart"
                 onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                className={`rounded-lg px-4 py-2 text-sm font-medium ${
+                  isActive("/cart")
+                  ? "bg-black text-white"
+                  : "text-gray-600 hover:bg-gray-100 hover:text-black"
+              }`}
               >
                 Cart
 
